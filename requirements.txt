@@ -1,0 +1,4 @@
+matplotlib
+pyQt5
+pillow
+#pip install torch torchvision --pre -f https://download.pytorch.org/whl/nightly/cu121/torch_nightly.html

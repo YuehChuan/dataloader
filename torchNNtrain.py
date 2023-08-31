@@ -2,6 +2,7 @@
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 import matplotlib.pyplot as plt
+from modelNet import Net
 
 # Create the dataset with N_SAMPLES samples
 N_SAMPLES, D_in, H, D_out = 200, 2, 30, 1
@@ -34,15 +35,13 @@ with open('data.txt', 'a') as f:
 
 # Define the batch size and the number of epochs
 BATCH_SIZE = 100
-N_EPOCHS = 100
+N_EPOCHS = 1000
 xin = torch.from_numpy(X)
 xin=xin.float()
 yin=torch.from_numpy(y)
 yin=yin.unsqueeze(1)
 yin=yin.float()
 
-# Use torch.utils.data to create a DataLoader
-# that will take care of creating batches
 dataset = TensorDataset(xin, yin)
 dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
@@ -50,11 +49,13 @@ dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 model = torch.nn.Sequential(
     torch.nn.Linear(D_in, H),
     torch.nn.ReLU(),
-    #torch.nn.Linear(H, H),
-    #torch.nn.ReLU(),
+    torch.nn.Linear(H, H),
+    torch.nn.ReLU(),
     torch.nn.Linear(H, D_out),
     torch.nn.Sigmoid(),
 )
+
+model1 = Net()
 
 loss_fn = torch.nn.BCELoss(reduction='sum')
 #optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
@@ -70,8 +71,8 @@ for epoch in range(N_EPOCHS):
     # Loop over batches in an epoch using DataLoader
     for id_batch, (x_batch, y_batch) in enumerate(dataloader):
 
-        y_batch_pred = model(x_batch)
 
+        y_batch_pred = model(x_batch)
         loss = loss_fn(y_batch_pred, y_batch)
 
         optimizer.zero_grad()

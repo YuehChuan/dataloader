@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import torch
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 N_SAMPLES, D_in, H, D_out = 2000, 2, 30, 1
