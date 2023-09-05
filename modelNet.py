@@ -2,7 +2,7 @@
 import torch.nn as nn
 class Net(nn.Module):
     def __init__(self):
-        D_in, H, D_out = 2, 30, 1
+        D_in, H, D_out = 224, 672, 1
         super().__init__()
         self.linear1 = nn.Linear(D_in, H)
         self.linear2 = nn.Linear(H, H)
